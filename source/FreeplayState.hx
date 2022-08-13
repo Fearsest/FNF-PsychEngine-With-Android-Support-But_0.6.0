@@ -52,8 +52,8 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		Paths.clearStoredMemory();
-		Paths.clearUnusedMemory();
+		//Paths.clearStoredMemory();
+		//Paths.clearUnusedMemory();
 		
 		persistentUpdate = true;
 		PlayState.isStoryMode = false;
@@ -135,7 +135,7 @@ class FreeplayState extends MusicBeatState
 
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);
-			add(icon);
+			// add(icon);
 
 			// songText.x += 40;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
@@ -215,8 +215,8 @@ class FreeplayState extends MusicBeatState
 		add(text);
 
 		#if android
-		addVirtualPad(FULL, A_B_C_X_Y_Z);
-		virtualPad.y = -26;
+		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+		virtualPad.y = 27;
 		#end
 
 		super.create();
@@ -318,6 +318,15 @@ class FreeplayState extends MusicBeatState
 					changeDiff();
 				}
 			}
+
+			#if !android
+			if(FlxG.mouse.wheel != 0)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+				changeSelection(-shiftMult * FlxG.mouse.wheel, false);
+				changeDiff();
+			}
+			#end
 		}
 
 		if (controls.UI_LEFT_P)
@@ -344,8 +353,6 @@ class FreeplayState extends MusicBeatState
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
-		else if(space)
-		{
 			if(instPlaying != curSelected)
 			{
 				#if PRELOAD_ALL
@@ -361,14 +368,13 @@ class FreeplayState extends MusicBeatState
 
 				FlxG.sound.list.add(vocals);
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-				vocals.play();
+				vocals.stop();
 				vocals.persist = true;
 				vocals.looped = true;
-				vocals.volume = 0.7;
+				vocals.volume = 0;
 				instPlaying = curSelected;
 				#end
 			}
-		}
 
 		else if (accepted)
 		{

@@ -18,7 +18,7 @@ class Achievements {
 		["Lady Killer",					"Beat Week 4 on Hard with no Misses.",				'week4_nomiss',			false],
 		["Missless Christmas",			"Beat Week 5 on Hard with no Misses.",				'week5_nomiss',			false],
 		["Highscore!!",					"Beat Week 6 on Hard with no Misses.",				'week6_nomiss',			false],
-		["God Effing Damn It!",			"Beat Week 7 on Hard with no Misses.",				'week7_nomiss',			 true],
+		["God Effing Damn It!",			"Beat Week 7 on Hard with no Misses.",				'week7_nomiss',			false],
 		["What a Funkin' Disaster!",	"Complete a Song with a rating lower than 20%.",	'ur_bad',				false],
 		["Perfectionist",				"Complete a Song with a rating of 100%.",			'ur_good',				false],
 		["Roadkill Enthusiast",			"Watch the Henchmen die over 100 times.",			'roadkill_enthusiast',	false],
@@ -26,11 +26,13 @@ class Achievements {
 		["Hyperactive",					"Finish a Song without going Idle.",				'hype',					false],
 		["Just the Two of Us",			"Finish a Song pressing only two keys.",			'two_keys',				false],
 		["Toaster Gamer",				"Have you tried to run the game on a toaster?",		'toastie',				false],
-		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",	'debugger',				 true]
+		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",	'debugger',				 true], 
+        ["Cheater",                     "Use botplay 15 times",      'cpuControlled',         false]   
 	];
 	public static var achievementsMap:Map<String, Bool> = new Map<String, Bool>();
 
 	public static var henchmenDeath:Int = 0;
+        public static var cpuControlled:Int = 0;
 	public static function unlockAchievement(name:String):Void {
 		FlxG.log.add('Completed achievement "' + name +'"');
 		achievementsMap.set(name, true);
@@ -58,12 +60,12 @@ class Achievements {
 			if(FlxG.save.data.achievementsMap != null) {
 				achievementsMap = FlxG.save.data.achievementsMap;
 			}
-			if(henchmenDeath == 0 && FlxG.save.data.henchmenDeath != null) {
-				henchmenDeath = FlxG.save.data.henchmenDeath;
+			if(cpuControlled == 0 && FlxG.save.data.cpuControlled != null) {
+			    cpuControlled == FlxG.save.data.cpuControlled;
+			}
 			}
 		}
 	}
-}
 
 class AttachedAchievement extends FlxSprite {
 	public var sprTracker:FlxSprite;
